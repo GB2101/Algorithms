@@ -22,11 +22,28 @@ int lomuto (vector<int> &array, int l, int r){
     return s;
 }
 
+int hoare (vector<int> &array, int l, int r){
+    int p = array[l];
+    int i = l, j = r;
+    while (i < j){
+        while (i <= r && array[i] <= p){
+            i++;
+        }
+        while (array[j] > p){
+            j--;
+        }
+        change(array, i, j);
+    }
+    change(array, i, j);
+    change(array, l, j);
+    return j;
+}
+
 void quick_sort (vector<int> &array, int l, int r){
     if (l == r || r < l){
         return;
     }
-    int k = lomuto(array, l, r);
+    int k = hoare(array, l, r);
     quick_sort(array, l, k - 1);
     quick_sort(array, k + 1, r);
 }
